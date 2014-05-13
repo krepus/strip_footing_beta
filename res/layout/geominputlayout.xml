@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+        >
+
+    <TextView
+            android:id="@+id/unit_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_marginLeft="@dimen/padvertop"
+            android:text="Units are in meter and kN "/>
+
+    <TextView
+            android:id="@+id/b1_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_below="@id/unit_txt"
+            android:text="b1 = "/>
+
+    <EditText
+            android:id="@+id/b1_input"
+            android:inputType="number|numberSigned|numberDecimal"
+            android:paddingLeft="3dip"
+            android:textSize="17dp"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_width="@dimen/edittextwidth"
+            android:layout_height="@dimen/edittextht"
+            android:singleLine="true"
+            android:maxLength="5"
+            android:selectAllOnFocus="true"
+            android:background="@color/edittextbackground"
+            android:layout_toRightOf="@id/b1_text"
+            android:layout_below="@id/unit_txt"
+            />
+    <EditText
+            android:id="@+id/b2_input"
+            android:inputType="number|numberSigned|numberDecimal"
+            android:paddingLeft="3dip"
+            android:textSize="17dp"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_width="@dimen/edittextwidth"
+            android:layout_height="@dimen/edittextht"
+            android:singleLine="true"
+            android:maxLength="5"
+            android:selectAllOnFocus="true"
+            android:background="@color/edittextbackground"
+            android:layout_below="@id/b1_input"
+            android:layout_alignRight="@id/b1_input"
+            />
+
+    <TextView
+            android:id="@+id/b2_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_below="@id/b1_input"
+            android:layout_toLeftOf="@id/b1_input"
+            android:text="b2= "/>
+
+
+    <TextView
+            android:id="@+id/Hb_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_toRightOf="@id/b1_input"
+            android:layout_below="@id/unit_txt"
+            android:layout_marginLeft="10dp"
+            android:text="Hb= "/>
+    <EditText
+            android:id="@+id/Hb_input"
+            android:inputType="number|numberSigned|numberDecimal"
+            android:paddingLeft="3dip"
+            android:textSize="17dp"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_width="@dimen/edittextwidth"
+            android:layout_height="@dimen/edittextht"
+            android:singleLine="true"
+            android:maxLength="5"
+            android:selectAllOnFocus="true"
+            android:background="@color/edittextbackground"
+            android:layout_toRightOf="@id/Hb_text"
+            android:layout_below="@id/unit_txt"
+            />
+    <EditText
+            android:id="@+id/Df_input"
+            android:inputType="number|numberSigned|numberDecimal"
+            android:paddingLeft="3dip"
+            android:textSize="17dp"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_width="@dimen/edittextwidth"
+            android:layout_height="@dimen/edittextht"
+            android:singleLine="true"
+            android:maxLength="5"
+            android:selectAllOnFocus="true"
+            android:background="@color/edittextbackground"
+            android:layout_below="@id/Hb_input"
+            android:layout_alignRight="@id/Hb_input"
+            />
+    <TextView
+            android:id="@+id/Df_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_below="@id/Hb_input"
+            android:layout_toLeftOf="@id/Hb_input"
+            android:text="Df= "/>
+    <EditText
+            android:id="@+id/Hf_input"
+            android:inputType="number|numberSigned|numberDecimal"
+            android:paddingLeft="3dip"
+            android:textSize="17dp"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_width="@dimen/edittextwidth"
+            android:layout_height="@dimen/edittextht"
+            android:singleLine="true"
+            android:maxLength="5"
+            android:selectAllOnFocus="true"
+            android:background="@color/edittextbackground"
+            android:layout_below="@id/Df_input"
+            android:layout_alignRight="@id/Hb_input"
+            />
+
+
+    <TextView
+            android:id="@+id/Hf_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_below="@id/Df_input"
+            android:layout_toLeftOf="@id/Hb_input"
+            android:text="Hf= "/>
+    <EditText
+            android:id="@+id/d0_input"
+            android:inputType="number|numberSigned|numberDecimal"
+            android:paddingLeft="3dip"
+            android:textSize="17dp"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_width="@dimen/edittextwidth"
+            android:layout_height="@dimen/edittextht"
+            android:singleLine="true"
+            android:maxLength="5"
+            android:selectAllOnFocus="true"
+            android:background="@color/edittextbackground"
+            android:layout_below="@id/Hf_input"
+            android:layout_alignRight="@id/Hb_input"
+            />
+
+    <TextView
+            android:id="@+id/d0_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_below="@id/Hf_input"
+            android:layout_toLeftOf="@id/Hb_input"
+            android:text="d0= "/>
+    <EditText
+            android:id="@+id/dp_input"
+            android:inputType="number|numberSigned|numberDecimal"
+            android:paddingLeft="3dip"
+            android:textSize="17dp"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_width="@dimen/edittextwidth"
+            android:layout_height="@dimen/edittextht"
+            android:singleLine="true"
+            android:maxLength="5"
+            android:selectAllOnFocus="true"
+            android:background="@color/edittextbackground"
+            android:layout_below="@id/d0_input"
+            android:layout_alignRight="@id/Hb_input"
+            />
+
+    <TextView
+            android:id="@+id/dp_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padvertop"
+            android:layout_below="@id/d0_input"
+            android:layout_toLeftOf="@id/Hb_input"
+            android:text="dp= "/>
+
+
+</RelativeLayout>
+
+
+

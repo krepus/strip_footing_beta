@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+    <!-- this is a comment
+    <item
+		android:id="@+id/LoadInput"
+		android:icon="@drawable/ic_menu_save"
+		android:title="Load input.."/>
+    <item
+		android:id="@+id/saveout"
+		android:icon="@drawable/ic_menu_save"
+		android:title="Export..."/>
+
+		-->
+	<item
+		android:id="@+id/about"
+		android:icon="@drawable/ic_menu_info_details"
+		android:title="About..." />
+</menu>

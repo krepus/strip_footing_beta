@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string
+            name="app_name"
+            >Strip Footing
+    </string>
+    <string
+            name="MY_AD_UNIT_ID"
+            >a14e33fd04c4dca
+    </string>
+    <string name="test_dev">958F9098E9770C291BE172A298855499
+    </string>
+
+
+    <dimen
+            name="padvertop"
+            >5dp
+    </dimen>
+    <dimen
+            name="paddingright"
+            >15dp
+    </dimen>
+    <dimen
+            name="edittextwidth"
+            >80dp
+    </dimen>
+    <dimen
+            name="edittextht"
+            >34dp
+    </dimen>
+    <color
+            name="edittextbackground"
+            >#FFE6E6E6
+    </color>
+</resources>

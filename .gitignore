@@ -1,0 +1,11 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+.idea
+.DS_Store
+/build
+/cad
+xmcdz_verification
+build.gradle
+local.properties
+strip_footing_beta.iml
