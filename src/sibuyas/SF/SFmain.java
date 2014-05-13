@@ -74,6 +74,12 @@ public class SFmain extends ActionBarActivity {
                 .setTabListener(new TabListener<LoadInputFragment>(
                         this, "laodtab", LoadInputFragment.class));
         actionBar.addTab(tab);
+
+        tab = actionBar.newTab()
+                .setIcon(R.drawable.result_image)
+                .setTabListener(new TabListener<ResultFragment>(
+                        this, "resulttab", ResultFragment.class));
+        actionBar.addTab(tab);
     }
 
 
@@ -767,21 +773,21 @@ public class SFmain extends ActionBarActivity {
     protected void onDestroy() {
 
         super.onDestroy();
-        savedesignParam();
+        //savedesignParam();
         // mChecker.onDestroy();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        savedesignParam();
+        //savedesignParam();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         // getsaveddesignParam();
-        initializeinput();
+       // initializeinput();
 
     }
 
