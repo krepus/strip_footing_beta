@@ -78,7 +78,7 @@ public class StripfootingbitmapGeometry {
         my0 = mbitmapHeight / 2.f;
 
         //set strip footing elevation coord, in clockwise order
-        mPtsSF = new PointF[11];
+        mPtsSF = new PointF[12];
         mPtsSF[0] = new PointF(0.f, fhb + fdf + fhf);
         mPtsSF[1] = new PointF(0.f, fhb + fdf);
         mPtsSF[2] = new PointF(fd0 - fc1 / 2.f, fhb + fdf);

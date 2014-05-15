@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-        >
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true">
 
 
     <ImageView
-            android:id="@+id/imageview_bearing"
-            android:layout_column="1"
-            android:layout_marginLeft="@dimen/padvertop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/result_image"
-            />
+        android:id="@+id/geom_img"
+        android:layout_column="1"
+        android:layout_marginLeft="@dimen/padvertop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/result_image" />
+
+    <!--
     <ImageView
             android:id="@+id/imageview_shear"
             android:layout_column="1"
@@ -35,6 +35,9 @@
             android:layout_below="@id/imageview_shear"
             android:src="@drawable/result_image"
             />
+
+            -->
+
 </RelativeLayout>
 
 
