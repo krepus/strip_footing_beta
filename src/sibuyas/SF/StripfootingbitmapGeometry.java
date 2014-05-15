@@ -19,7 +19,7 @@ public class StripfootingbitmapGeometry {
 
 
     public int mbitmapWidth, mbitmapHeight;
-
+    private double scalefactor = 0.7d;
     public double mscale_geom;
     public float mx0, my0, mtxtht;
     public PointF[] mPtsSF;
@@ -55,8 +55,8 @@ public class StripfootingbitmapGeometry {
         this.dp = dp;
 
         mbitmapWidth = bitmap.getWidth();
-        mbitmapHeight = mbitmapWidth;
-        mscale_geom = mbitmapWidth * 0.7d / max(b1.v(), b2.v());
+        mbitmapHeight = bitmap.getHeight();
+        mscale_geom = scalefactor * (double) mbitmapWidth / b1.v();
         mtxtht = txtht;  //20 for hdpi
 
 
@@ -115,27 +115,27 @@ public class StripfootingbitmapGeometry {
         //create matrix to translate
         Matrix matrix = new Matrix();
         //translate points using matrix object
-        matrix.setTranslate(mx0 - (fb1 / 2.f), my0 - (fb2 / 2.f));
+        matrix.setTranslate(mx0 - (fb1 / 2.f), my0 - ((fhb + fdf + fhf) / 2.f));
         matrix.mapPoints(boundaryPts);
 
         //build path from translated points
-        Path boundary = new Path();
-        boundary.reset();
-        boundary.moveTo(boundaryPts[0], boundaryPts[1]);
-        boundary.lineTo(boundaryPts[2], boundaryPts[3]);
-        boundary.lineTo(boundaryPts[4], boundaryPts[5]);
-        boundary.lineTo(boundaryPts[6], boundaryPts[7]);
-        boundary.lineTo(boundaryPts[8], boundaryPts[9]);
-        boundary.lineTo(boundaryPts[10], boundaryPts[11]);
-        boundary.lineTo(boundaryPts[12], boundaryPts[13]);
-        boundary.lineTo(boundaryPts[14], boundaryPts[15]);
-        boundary.lineTo(boundaryPts[16], boundaryPts[17]);
-        boundary.lineTo(boundaryPts[18], boundaryPts[19]);
-        boundary.lineTo(boundaryPts[20], boundaryPts[21]);
-        boundary.lineTo(boundaryPts[22], boundaryPts[23]);
-        boundary.lineTo(boundaryPts[0], boundaryPts[1]);
+        Path path = new Path();
+        path.reset();
+        path.moveTo(boundaryPts[0], boundaryPts[1]);
+        path.lineTo(boundaryPts[2], boundaryPts[3]);
+        path.lineTo(boundaryPts[4], boundaryPts[5]);
+        path.lineTo(boundaryPts[6], boundaryPts[7]);
+        path.lineTo(boundaryPts[8], boundaryPts[9]);
+        path.lineTo(boundaryPts[10], boundaryPts[11]);
+        path.lineTo(boundaryPts[12], boundaryPts[13]);
+        path.lineTo(boundaryPts[14], boundaryPts[15]);
+        path.lineTo(boundaryPts[16], boundaryPts[17]);
+        path.lineTo(boundaryPts[18], boundaryPts[19]);
+        path.lineTo(boundaryPts[20], boundaryPts[21]);
+        path.lineTo(boundaryPts[22], boundaryPts[23]);
+        path.lineTo(boundaryPts[0], boundaryPts[1]);
         //draw actual lines
-        canvas.drawPath(boundary, paint);
+        canvas.drawPath(path, paint);
 
     }
 

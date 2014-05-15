@@ -19,6 +19,17 @@ import static sibuyas.SF.MyDouble.*;
 public class DesignInputFragment extends Fragment {
     private View view;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (null != savedInstanceState) {
+            //Log.i(TAG, "premium fragment oncreate bundle not null");
+            return;
+        }
+        setHasOptionsMenu(true);
+        //Log.i(TAG, "onCreate");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +63,13 @@ public class DesignInputFragment extends Fragment {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor ed = sp.edit();
 
-        TextView v = (TextView) view.findViewById(R.id.b1_input);
+        TextView v = (TextView) view.findViewById(R.id.c1_input);
+        ed.putString(getString(R.string.C1_PREF), v.getText().toString());
+
+        v = (TextView) view.findViewById(R.id.c2_in);
+        ed.putString(getString(R.string.C2_PREF), v.getText().toString());
+
+        v = (TextView) view.findViewById(R.id.b1_input);
         ed.putString(getString(R.string.B1_PREF), v.getText().toString());
 
         v = (TextView) view.findViewById(R.id.b2_in);

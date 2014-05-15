@@ -21,16 +21,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-/**
- * Created by j0sua3 on 13/05/2014.
- */
+
 public class DesignOut extends Fragment {
     boolean debuglog = true;
     private static final String TAG = "DesignOut";
     private String mUnit;
     private View view;
 
-    MyDouble b1, b2, Hb, Df, Hf, d0, dp, P0v, P0h, P1v, P1h, Wsoil;
+    MyDouble b1, b2, c1, c2, Hb, Df, Hf, d0, dp, P0v, P0h, P1v, P1h, Wsoil;
     StripFooting sf;
 
     @Override
@@ -47,16 +45,11 @@ public class DesignOut extends Fragment {
         if (getDesignInput()) {
 
             int mbitmapWidth = getResources().getDisplayMetrics().widthPixels;
-            int mbitmapHeight = mbitmapWidth;
+            //scale the height to matchwith actual data
+            int mbitmapHeight = (int) ((double) mbitmapWidth * ((Hb.v() + Df.v() + Hf.v()) * 1.5d / b1.v()));
             Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
             int txtht = 15 * (int) getResources().getDisplayMetrics().density;
-
-            MyDouble c1, c2;
-            c1 = new MyDouble(0.3, m);
-            c2 = new MyDouble(0.3, m);
             sf = new StripFooting(bitmap, txtht, b1, b2, c1, c2, Hb, Df, Hf, d0, dp);
-
-
         }
 
         ImageView imageView = (ImageView) view.findViewById(R.id.geom_img);
@@ -80,6 +73,8 @@ public class DesignOut extends Fragment {
 
             //for SI unit
             if (mUnit.equals(getString(R.string.SI))) {
+                c1 = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.C1_PREF), "")), m);
+                c2 = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.C2_PREF), "")), m);
                 b1 = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.B1_PREF), "")), m);
                 b2 = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.B2_PREF), "")), m);
                 Hb = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.HB_PREF), "")), m);
@@ -94,6 +89,8 @@ public class DesignOut extends Fragment {
                 Wsoil = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.WSOIL_PREF), "")), kN_per_m3);
 
             } else {
+                c1 = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.C1_PREF), "")), ft);
+                c2 = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.C2_PREF), "")), ft);
                 b1 = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.B1_PREF), "")), ft);
                 b2 = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.B2_PREF), "")), ft);
                 Hb = new MyDouble(Double.parseDouble(sp.getString(getString(R.string.HB_PREF), "")), ft);
@@ -122,4 +119,6 @@ public class DesignOut extends Fragment {
         //then return the bundled data
         //return bundle;
     }
+
+
 }

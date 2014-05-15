@@ -16,6 +16,8 @@
 
 
     <!--UI strings-->
+    <string name="c1_txt">c1</string>
+    <string name="c2_txt">c2</string>
     <string name="b1_txt">b1</string>
     <string name="b2_txt">b2</string>
     <string name="Hb_txt">Hb</string>
@@ -44,6 +46,8 @@
 
 
     <!-- preferences -->
+    <string name="C1_PREF">C1</string>
+    <string name="C2_PREF">C2</string>
     <string name="B1_PREF">B1</string>
     <string name="B2_PREF">B2</string>
     <string name="HB_PREF">HB</string>
