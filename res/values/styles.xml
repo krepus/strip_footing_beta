@@ -17,5 +17,23 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="editstyle" parent="AppTheme">
+        <item name="android:layout_width">@dimen/edittextwidth</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">number|numberSigned|numberDecimal</item>
+        <item name="android:paddingLeft">3dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLength">5</item>
+        <item name="android:selectAllOnFocus">true</item>
+
+
+    </style>
+
+    <style name="textviewstyle" parent="AppTheme">
+        <item name="android:layout_width">@dimen/textviewwidth</item>
+        <item name="android:layout_height">@dimen/edittextht</item>
+        <item name="android:layout_marginTop">8dip</item>
+    </style>
+
 
 </resources>

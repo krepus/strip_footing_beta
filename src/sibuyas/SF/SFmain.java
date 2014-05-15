@@ -51,6 +51,13 @@ public class SFmain extends ActionBarActivity {
     private FragmentTabHost mTabHost;
     private InterstitialAd interstitial;
 
+  /*  @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.sfmain2);
+
+    }*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,11 +131,14 @@ public class SFmain extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+/*
 
     public void initializeinput() {
-        /*
+        */
+/*
            * initialize the edit text for first time use
-           */
+           *//*
+
         getsaveddesignParam();
 
         EditText etext = (EditText) findViewById(R.id.P0v_input);
@@ -156,13 +166,17 @@ public class SFmain extends ActionBarActivity {
         etext = (EditText) findViewById(R.id.wtsoil_input);
         etext.setText(Double.toString(soilwt), TextView.BufferType.EDITABLE);
     }
+*/
+/*
 
     public int getdesignParam() {
-        /*
+        */
+/*
            * retrieve input from editfield and save into preferences if all input
            * field is valid default units are mm & kN populate the global design
            * input variables
-           */
+           *//*
+
 
         String s = null;
         EditText text = (EditText) findViewById(R.id.P0v_input);
@@ -280,6 +294,8 @@ public class SFmain extends ActionBarActivity {
 
         return 1;
     }
+*/
+/*
 
     public void savedesignParam() {
         final SharedPreferences design_prefs = getSharedPreferences(PREFS_NAME,
@@ -305,6 +321,8 @@ public class SFmain extends ActionBarActivity {
             ed.commit();
         }
     }
+*/
+/*
 
     public void getsaveddesignParam() {
 
@@ -325,6 +343,7 @@ public class SFmain extends ActionBarActivity {
         soilwt = ret.getFloat("soilwt", 17.f);
 
     }
+*/
 
     public double funcqx(double P, double M, double Bx, double Bz, double x) {
         /*
@@ -787,7 +806,7 @@ public class SFmain extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         // getsaveddesignParam();
-       // initializeinput();
+        // initializeinput();
 
     }
 
