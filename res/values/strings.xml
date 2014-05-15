@@ -29,7 +29,36 @@
     <string name="p1h_txt">P1h</string>
     <string name="soilwt_txt">Wsoil</string>
 
+    <!-- menu -->
+    <string name="preferences_title_str">Preferences</string>
+    <string name="About_str">About</string>
 
+    <!-- SETTINGS -->
+    <string name="UNIT">UNIT</string>
+    <string name="SI">SI</string>
+    <string name="Imperial">Imperial</string>
+    <array name="units_array_entries">
+        <item>@string/SI</item>
+        <item>@string/Imperial</item>
+    </array>
+
+
+    <!-- preferences -->
+    <string name="B1_PREF">B1</string>
+    <string name="B2_PREF">B2</string>
+    <string name="HB_PREF">HB</string>
+    <string name="DF_PREF">DF</string>
+    <string name="HF_PREF">HF</string>
+    <string name="D0_PREF">D0</string>
+    <string name="DP_PREF">DP</string>
+    <string name="P0V_PREF">P0V</string>
+    <string name="P0H_PREF">P0H</string>
+    <string name="P1V_PREF">P1V</string>
+    <string name="P1H_PREF">P1H</string>
+    <string name="WSOIL_PREF">WSOIL</string>
+
+
+    <!-- COLORS -->
     <color name="edittextbackground">#FFE6E6E6
     </color>
 </resources>
