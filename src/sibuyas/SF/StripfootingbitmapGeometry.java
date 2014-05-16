@@ -3,14 +3,15 @@ package sibuyas.SF;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Typeface;
 
+import static sibuyas.SF.Util.getCurTextLengthInPixels;
 import static java.lang.Math.max;
+
 
 public class StripfootingbitmapGeometry {
 
@@ -18,12 +19,12 @@ public class StripfootingbitmapGeometry {
     public Bitmap mbitmap_final;
 
 
-    public int mbitmapWidth, mbitmapHeight;
-    private double scalefactor = 0.7d;
+    public int geombitmapWidth, geombitmapHeight;
     public double mscale_geom;
     public float mx0, my0, mtxtht;
     public PointF[] mPtsSF;
     public Paint mpaint;
+    public Typeface mtypeface = Typeface.SANS_SERIF;
 
     MyDouble b1, b2, c1, c2, Hb, Df, Hf, d0, dp;
     public float fb1, fb2, fc1, fc2, fhb, fdf, fhf, fd0, fdp;
@@ -44,6 +45,7 @@ public class StripfootingbitmapGeometry {
     ) {
         //set fields for actual dim input by user
         mbitmap_final = bitmap;
+        mtxtht = txtht;  //20 for hdpi
         this.b1 = b1;
         this.b2 = b2;
         this.c1 = c1;
@@ -54,10 +56,21 @@ public class StripfootingbitmapGeometry {
         this.d0 = d0;
         this.dp = dp;
 
-        mbitmapWidth = bitmap.getWidth();
-        mbitmapHeight = bitmap.getHeight();
-        mscale_geom = scalefactor * (double) mbitmapWidth / b1.v();
-        mtxtht = txtht;  //20 for hdpi
+        geombitmapWidth = bitmap.getWidth();
+        geombitmapHeight = bitmap.getHeight();
+
+
+    }
+
+    /**
+     * @param paint
+     * @param LM    = left margin of grid box
+     * @param RM    = right margin of gridbox
+     */
+
+    public void drawSFelev(Paint paint, int LM, int RM) {
+
+        mscale_geom = (geombitmapWidth - (LM + RM)) / b1.v();
 
 
         //set class fields value scaled to bitmap size
@@ -74,8 +87,8 @@ public class StripfootingbitmapGeometry {
         //adjust bitmap width
 
         //init following
-        mx0 = mbitmapWidth / 2.f;
-        my0 = mbitmapHeight / 2.f;
+        mx0 = LM + (geombitmapWidth - (LM + RM)) / 2.f; //central location for translation
+        my0 = geombitmapHeight / 2.f;
 
         //set strip footing elevation coord, in clockwise order
         mPtsSF = new PointF[12];
@@ -91,12 +104,6 @@ public class StripfootingbitmapGeometry {
         mPtsSF[9] = new PointF(mPtsSF[8].x, mPtsSF[2].y);
         mPtsSF[10] = new PointF(fb1, mPtsSF[2].y);
         mPtsSF[11] = new PointF(fb1, mPtsSF[0].y);
-
-
-    }
-
-
-    public void drawSFelev(Paint paint) {
 
         float[] boundaryPts = {mPtsSF[0].x, mPtsSF[0].y,
                 mPtsSF[1].x, mPtsSF[1].y,
@@ -311,22 +318,6 @@ public class StripfootingbitmapGeometry {
 
     public void drawAllInfo(Canvas canvas) {
 
-        //mbitmap_final = bitmap;
-
-        mpaint = new Paint();
-        mpaint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-/*
-        //draw filled rectangle
-        mpaint.setColor(Color.WHITE);
-        mpaint.setStyle(Paint.Style.FILL);
-        drawPFelev(mpaint);*/
-
-        //draw boundary
-        mpaint.setColor(Color.BLUE);
-        mpaint.setStyle(Paint.Style.STROKE);
-        mpaint.setStrokeWidth(2.f);
-        drawSFelev(mpaint);
 
         //draw dimension at bottom of plan
     /*    mpaint.setStrokeWidth(1.f);
@@ -355,5 +346,6 @@ public class StripfootingbitmapGeometry {
         CLpaint.setTypeface(Typeface.create("Helvetica", Typeface.BOLD));
         drawCenterLine(CLpaint);*/
     }
+
 
 }

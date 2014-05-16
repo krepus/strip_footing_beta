@@ -1,25 +1,17 @@
 package sibuyas.SF;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import static sibuyas.SF.MyDouble.Unit.*;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 
 public class DesignOut extends Fragment {
@@ -46,14 +38,17 @@ public class DesignOut extends Fragment {
 
             int mbitmapWidth = getResources().getDisplayMetrics().widthPixels;
             //scale the height to matchwith actual data
-            int mbitmapHeight = (int) ((double) mbitmapWidth * ((Hb.v() + Df.v() + Hf.v()) * 1.5d / b1.v()));
+            int mbitmapHeight = (int) ((double) mbitmapWidth * ((Hb.v() + Df.v() + Hf.v()) * 1.0d / b1.v()));
             Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
             int txtht = 15 * (int) getResources().getDisplayMetrics().density;
-            sf = new StripFooting(bitmap, txtht, b1, b2, c1, c2, Hb, Df, Hf, d0, dp);
+            sf = new StripFooting(bitmap, txtht, b1, b2, c1, c2, Hb, Df, Hf, d0, dp, P0v, P0h, P1v, P1h, Wsoil);
         }
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.geom_img);
-        imageView.setImageBitmap(sf.getSketch());
+        ImageView geomview = (ImageView) view.findViewById(R.id.geom_img);
+        geomview.setImageBitmap(sf.getGeomSketch());
+
+        ImageView bearing_img = (ImageView) view.findViewById(R.id.imageview_shear);
+        bearing_img.setImageBitmap(sf.getBearingPressureBitmap());
 
 
         return view;

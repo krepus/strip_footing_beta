@@ -23,7 +23,7 @@
         <item name="android:inputType">number|numberSigned|numberDecimal</item>
         <item name="android:paddingLeft">3dip</item>
         <item name="android:singleLine">true</item>
-        <item name="android:maxLength">5</item>
+        <item name="android:maxLength">7</item>
         <item name="android:selectAllOnFocus">true</item>
 
 

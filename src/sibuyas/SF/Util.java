@@ -1,6 +1,8 @@
 package sibuyas.SF;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -68,5 +70,10 @@ public class Util {
     }
 
 
-
+    public static int getCurTextLengthInPixels(Paint this_paint,
+                                                String this_text) {
+        Rect rect = new Rect();
+        this_paint.getTextBounds(this_text, 0, this_text.length(), rect);
+        return rect.width();
+    } // --- end of getCurTextLengthInPixels ---
 }
