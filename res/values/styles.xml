@@ -15,6 +15,12 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarTabTextStyle">@style/myactionbartheme</item>
+    </style>
+
+
+    <style name="myactionbartheme" parent="AppTheme">
+        <item name="android:textColor">@color/tab_text_color</item>
     </style>
 
     <style name="editstyle" parent="AppTheme">
@@ -33,6 +39,14 @@
         <item name="android:layout_width">@dimen/textviewwidth</item>
         <item name="android:layout_height">@dimen/edittextht</item>
         <item name="android:layout_marginTop">8dip</item>
+        <item name="android:layout_marginLeft">8dip</item>
+    </style>
+
+    <style name="textviewstyle_loading" parent="AppTheme">
+        <item name="android:layout_width">@dimen/textviewwidth_loading</item>
+        <item name="android:layout_height">@dimen/edittextht</item>
+        <item name="android:layout_marginTop">8dip</item>
+        <item name="android:layout_marginLeft">8dip</item>
     </style>
 
 

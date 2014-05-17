@@ -40,29 +40,29 @@ public class Util {
         Double res = tmp / p;
         return res.toString();
     }
+
     /**
-     *
      * @param ctx
      * @param v
      */
-    public static void slide_down(Context ctx, View v){
+    public static void slide_down(Context ctx, View v) {
 
         Animation a = AnimationUtils.loadAnimation(ctx, R.anim.slide_down);
-        if(a != null){
+        if (a != null) {
             a.reset();
-            if(v != null){
+            if (v != null) {
                 v.clearAnimation();
                 v.startAnimation(a);
             }
         }
     }
 
-    public static void slide_up(Context ctx, View v){
+    public static void slide_up(Context ctx, View v) {
 
         Animation a = AnimationUtils.loadAnimation(ctx, R.anim.slide_up);
-        if(a != null){
+        if (a != null) {
             a.reset();
-            if(v != null){
+            if (v != null) {
                 v.clearAnimation();
                 v.startAnimation(a);
             }
@@ -71,7 +71,7 @@ public class Util {
 
 
     public static int getCurTextLengthInPixels(Paint this_paint,
-                                                String this_text) {
+                                               String this_text) {
         Rect rect = new Rect();
         this_paint.getTextBounds(this_text, 0, this_text.length(), rect);
         return rect.width();

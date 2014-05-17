@@ -22,6 +22,7 @@
             style="@style/editstyle"
             android:layout_toRightOf="@id/c1_text"
             android:layout_alignParentTop="true" />
+
         <EditText
             android:id="@+id/c2_in"
             android:text="0.5"
@@ -90,7 +91,7 @@
 
         <EditText
             android:id="@+id/Hf_input"
-            android:text="0.4"
+            android:text="0.6"
             style="@style/editstyle"
             android:layout_below="@id/Df_input"
             android:layout_alignRight="@id/b2_in" />
@@ -105,7 +106,7 @@
 
         <EditText
             android:id="@+id/d0_input"
-            android:text="1.5"
+            android:text="1.0"
             style="@style/editstyle"
             android:layout_below="@id/Hf_input"
             android:layout_alignRight="@id/b2_in" />
@@ -118,7 +119,7 @@
 
         <EditText
             android:id="@+id/dp_input"
-            android:text="3.0"
+            android:text="4.0"
             style="@style/editstyle"
             android:layout_below="@id/d0_input"
             android:layout_alignRight="@id/b2_in" />
@@ -139,51 +140,51 @@
         <!-- LOADING -->
         <View
             android:id="@+id/spacer"
-            android:background="@color/edittextbackground"
+            android:background="@color/spacer_color"
             android:layout_marginTop="10dip"
             android:layout_marginBottom="10dip"
             android:layout_width="fill_parent"
             android:layout_height="2dip"
             android:layout_below="@+id/dp_input" />
 
-        <EditText
-            android:id="@+id/P0v_input"
-            android:text="100"
-            style="@style/editstyle"
-            android:layout_below="@id/spacer"
-            android:layout_alignRight="@id/dp_input" />
-
-
         <TextView
             android:id="@+id/P0v_text"
             android:text="@string/p0v_txt"
-            style="@style/textviewstyle"
-            android:layout_alignBaseline="@id/P0v_input" />
+            android:layout_below="@id/spacer"
+            style="@style/textviewstyle_loading" />
+
+        <EditText
+            android:id="@+id/P0v_input"
+            android:text="120"
+            style="@style/editstyle"
+            android:layout_alignBaseline="@id/P0v_text"
+            android:layout_toRightOf="@id/P0v_text" />
+
 
         <EditText
             android:id="@+id/P0h_input"
             android:text="0.0"
             style="@style/editstyle"
-            android:layout_below="@id/P0v_input"
-            android:layout_alignRight="@id/dp_input" />
+            android:layout_below="@id/P0v_text"
+            android:layout_alignRight="@id/P0v_input" />
 
         <TextView
             android:id="@+id/P0h_text"
             android:text="@string/p0h_txt"
-            style="@style/textviewstyle"
+            style="@style/textviewstyle_loading"
             android:layout_alignBaseline="@id/P0h_input" />
 
         <EditText
             android:id="@+id/P1v_input"
-            android:text="0.0"
+            android:text="200"
             style="@style/editstyle"
             android:layout_below="@id/P0h_input"
-            android:layout_alignRight="@id/P0h_input" />
+            android:layout_alignRight="@id/P0v_input" />
 
         <TextView
             android:id="@+id/P1v_text"
             android:text="@string/p1v_txt"
-            style="@style/textviewstyle"
+            style="@style/textviewstyle_loading"
             android:layout_alignBaseline="@id/P1v_input" />
 
 
@@ -198,7 +199,7 @@
         <TextView
             android:id="@+id/P1h_text"
             android:text="@string/p1h_txt"
-            style="@style/textviewstyle"
+            style="@style/textviewstyle_loading"
             android:layout_alignBaseline="@id/P1h_input" />
 
         <EditText
@@ -211,7 +212,7 @@
         <TextView
             android:id="@+id/wtsoil_text"
             android:text="@string/soilwt_txt"
-            style="@style/textviewstyle"
+            style="@style/textviewstyle_loading"
             android:layout_alignBaseline="@id/wtsoil_input" />
 
 

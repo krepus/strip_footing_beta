@@ -13,6 +13,7 @@
     <dimen name="edittextht">20dip</dimen>
     <dimen name="textht">12dip</dimen>
     <dimen name="textviewwidth">50dip</dimen>
+    <dimen name="textviewwidth_loading">150dip</dimen>
 
 
     <!--UI strings-->
@@ -61,8 +62,10 @@
     <string name="P1H_PREF">P1H</string>
     <string name="WSOIL_PREF">WSOIL</string>
 
+    <string name="WIDTHPIXEL_PREF">WIDTHPIXEL_PREF</string>
+
 
     <!-- COLORS -->
-    <color name="edittextbackground">#FFE6E6E6
-    </color>
+    <color name="tab_text_color">#0000FF</color>
+    <color name="spacer_color">#0000FF</color>
 </resources>

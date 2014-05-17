@@ -117,6 +117,15 @@ public class DesignInputFragment extends Fragment {
 
             v = (TextView) view.findViewById(R.id.b2_text);
             v.setText(getString(R.string.b2_txt) + ", " + Unit.m.toString());
+
+
+            v = (TextView) view.findViewById(R.id.c1_text);
+            v.setText(getString(R.string.c1_txt) + ", " + Unit.m.toString());
+
+            v = (TextView) view.findViewById(R.id.c2_text);
+            v.setText(getString(R.string.c2_txt) + ", " + Unit.m.toString());
+
+
             v = (TextView) view.findViewById(R.id.Hb_text);
             v.setText(getString(R.string.Hb_txt) + ", " + Unit.m.toString());
             v = (TextView) view.findViewById(R.id.Df_text);
@@ -140,7 +149,7 @@ public class DesignInputFragment extends Fragment {
             v = (TextView) view.findViewById(R.id.P1h_text);
             v.setText(getString(R.string.p1h_txt) + ", " + Unit.kN.toString());
             v = (TextView) view.findViewById(R.id.wtsoil_text);
-            v.setText(getString(R.string.soilwt_txt) + ", " + Unit.kN_per_m3.toString());
+            v.setText(getString(R.string.soilwt_txt) + ", kN/m^3");
 
         } else {
             TextView v = (TextView) view.findViewById(R.id.b1_text);
@@ -148,6 +157,13 @@ public class DesignInputFragment extends Fragment {
 
             v = (TextView) view.findViewById(R.id.b2_text);
             v.setText(getString(R.string.b2_txt) + ", " + Unit.ft.toString());
+
+            v = (TextView) view.findViewById(R.id.c1_text);
+            v.setText(getString(R.string.c1_txt) + ", " + Unit.ft.toString());
+
+            v = (TextView) view.findViewById(R.id.c2_text);
+            v.setText(getString(R.string.c2_txt) + ", " + Unit.ft.toString());
+
             v = (TextView) view.findViewById(R.id.Hb_text);
             v.setText(getString(R.string.Hb_txt) + ", " + Unit.ft.toString());
             v = (TextView) view.findViewById(R.id.Df_text);
@@ -171,7 +187,7 @@ public class DesignInputFragment extends Fragment {
             v = (TextView) view.findViewById(R.id.P1h_text);
             v.setText(getString(R.string.p1h_txt) + ", " + Unit.kip.toString());
             v = (TextView) view.findViewById(R.id.wtsoil_text);
-            v.setText(getString(R.string.soilwt_txt) + ", " + Unit.pcf.toString());
+            v.setText(getString(R.string.soilwt_txt) + ", pcf");
         }
 
 
@@ -182,6 +198,12 @@ public class DesignInputFragment extends Fragment {
         v = (EditText) view.findViewById(R.id.b2_in);
         v.setText(pref.getString(getString(R.string.B2_PREF), "2"));
 
+        v = (EditText) view.findViewById(R.id.c1_input);
+        v.setText(pref.getString(getString(R.string.C1_PREF), "0.5"));
+
+        v = (EditText) view.findViewById(R.id.c2_in);
+        v.setText(pref.getString(getString(R.string.C2_PREF), "0.5"));
+
         v = (EditText) view.findViewById(R.id.Hb_input);
         v.setText(pref.getString(getString(R.string.HB_PREF), "0.3"));
 
@@ -189,13 +211,13 @@ public class DesignInputFragment extends Fragment {
         v.setText(pref.getString(getString(R.string.DF_PREF), "0.5"));
 
         v = (EditText) view.findViewById(R.id.Hf_input);
-        v.setText(pref.getString(getString(R.string.HF_PREF), "0.4"));
+        v.setText(pref.getString(getString(R.string.HF_PREF), "0.6"));
 
         v = (EditText) view.findViewById(R.id.d0_input);
-        v.setText(pref.getString(getString(R.string.D0_PREF), "1.5"));
+        v.setText(pref.getString(getString(R.string.D0_PREF), "1.0"));
 
         v = (EditText) view.findViewById(R.id.dp_input);
-        v.setText(pref.getString(getString(R.string.DP_PREF), "3.0"));
+        v.setText(pref.getString(getString(R.string.DP_PREF), "4.0"));
 
         v = (EditText) view.findViewById(R.id.P0v_input);
         v.setText(pref.getString(getString(R.string.P0V_PREF), "100"));
@@ -204,7 +226,7 @@ public class DesignInputFragment extends Fragment {
         v.setText(pref.getString(getString(R.string.P0H_PREF), "0.0"));
 
         v = (EditText) view.findViewById(R.id.P1v_input);
-        v.setText(pref.getString(getString(R.string.P1V_PREF), "100"));
+        v.setText(pref.getString(getString(R.string.P1V_PREF), "120"));
 
         v = (EditText) view.findViewById(R.id.P1h_input);
         v.setText(pref.getString(getString(R.string.P1H_PREF), "0.0"));

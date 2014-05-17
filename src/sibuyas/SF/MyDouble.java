@@ -128,6 +128,10 @@ public class MyDouble {
 
     }
 
+    public Unit u() {
+        return mUnit;
+    }
+
     /**
      * @return a converted double value specified by Unit unit
      */
@@ -316,8 +320,17 @@ public class MyDouble {
         mUnit = unit; //set unit string according to chosen unit
     }
 
+    public String unitToString(Unit unit) {
+
+        if (unit == Unit.kN_per_m3) {
+            return Util.r2str(mValue, 2) + "kN/m^3";
+        } else {
+            return unit.toString();
+        }
+    }
 
     public String toString() {
+
 
         return Util.r2str(mValue, 2) + String.valueOf(mUnit);
     }

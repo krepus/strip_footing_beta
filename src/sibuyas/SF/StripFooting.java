@@ -12,18 +12,27 @@ import android.graphics.Typeface;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static java.lang.Math.floor;
 import static sibuyas.SF.MyDouble.Unit.*;
 import static sibuyas.SF.Util.getCurTextLengthInPixels;
 import static java.lang.Math.max;
+import static sibuyas.SF.Util.r2str;
 
 public class StripFooting extends StripfootingbitmapGeometry {
 
     double P0v, P0h, P1v, P1h, soilwt;
     double concwt = 24.d;
     int RM, LM;
+    int bearing_chart_width, bearing_chart_height;
+    final int ngshor = 4;
+
+
+    String strpUnit, strlUnit, strfUnit, strmUnit;
 
     //global paint
-    Paint paint;
+    Paint labelPaint;
+    float forceTitleHeight;
+    int edgeclear = 10;
 
     //constructor
     public StripFooting(
@@ -53,13 +62,36 @@ public class StripFooting extends StripfootingbitmapGeometry {
         this.P1v = P1v.dblVal(kN);
         soilwt = Wsoil.dblVal(kN_per_m3);
 
+        //get unit labels
+        strpUnit = "(kPa)";
+        strlUnit = "(m)";
+        strfUnit = "(kN)";
+        strmUnit = "(kNm)";
+
+        if (b1.u() != m) {
+            strpUnit = "(psf)";
+            strlUnit = "(ft)";
+            strmUnit = "(kip-ft)";
+            strfUnit = "(kip)";
+
+        }
+
 
         //global paint for scaling
-        paint = new Paint();
-        paint.setTypeface(Typeface.SANS_SERIF);
+        labelPaint = new Paint();
+        labelPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        labelPaint.setStrokeWidth(0.f);
+        labelPaint.setTextSize(mtxtht);
+        labelPaint.setAntiAlias(true);
+        labelPaint.setTypeface(Typeface.SANS_SERIF);
         //margins are all referring to the location of the edges of teh foundation elevation
-        RM = 20; //right and left, respectively
-        LM = (int) mtxtht * 3 + getMaxStrOfGridLabels();
+        forceTitleHeight = mtxtht + 2;
+        RM = 30; //right and left, respectively
+        LM = (int) (5.f + forceTitleHeight + 5.f + getMaxWidthGridLabel(labelPaint) + 5.f);
+
+        // draw bearing pressure
+        bearing_chart_width = geombitmapWidth;
+        //  bearing_chart_height = (int) Math.rint(bearing_chart_width * 0.5d);
 
     }
 
@@ -128,63 +160,62 @@ public class StripFooting extends StripfootingbitmapGeometry {
             ymin = 0;
         }
 
+        //top and bottom margins
+        labelPaint = new Paint();
+        labelPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        labelPaint.setStrokeWidth(0.f);
+        labelPaint.setTextSize(mtxtht);
+        labelPaint.setAntiAlias(true);
+        labelPaint.setTypeface(Typeface.SANS_SERIF);
+        labelPaint.setStrokeWidth(0.f);
+
+        int topmargin = 5 + (int) forceTitleHeight + 5; // margin of the grid box
+        int bottmargin = 5 +
+                +getCurTextLengthInPixels(labelPaint, String.valueOf(r2str((int) xmax + 0.795, 3)))
+                + 5
+                + (int) forceTitleHeight + edgeclear;
+
 
         final int labeltextht = (int) mtxtht;
         Bitmap output = Bitmap.createBitmap(chart_image_width,
                 chart_image_height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
 
-        //final Paint paint = new Paint();
+        //paint.setTextSize(labeltextht);
         final Rect rect = new Rect(0, 0, chart_image_width, chart_image_height);
         final RectF rectF = new RectF(rect);
         final float roundPx = 0;
 
         // get the little rounded cornered outside
-        paint.setAntiAlias(true);
+        Paint chartPaint = new Paint();
         canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(Color.WHITE);
-        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-
-
-        paint.setTextSize(labeltextht);
-        paint.setAntiAlias(true);
-
-        int topmargin = 40; // margin of the grid box
-        int bottmargin = labeltextht * 3
-                + getCurTextLengthInPixels(paint, round2string(xmax, 2));
+        chartPaint.setColor(Color.WHITE);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, chartPaint);
 
 
         // set paint prop for grid box drawn as a rectangle
 
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeWidth(0.f);
-        paint.setColor(Color.WHITE);
         canvas.drawRect(LM, topmargin, chart_image_width - RM,
-                chart_image_height - bottmargin, paint);
-        paint.setColor(Color.GRAY);
+                chart_image_height - bottmargin, chartPaint);
+        chartPaint.setColor(Color.GRAY);
         canvas.drawLine(LM, topmargin, chart_image_width - RM,
-                topmargin, paint);
+                topmargin, chartPaint);
         canvas.drawLine(LM, chart_image_height - bottmargin,
                 chart_image_width - RM, chart_image_height
-                        - bottmargin, paint
+                        - bottmargin, chartPaint
         );
         canvas.drawLine(LM, topmargin, LM, chart_image_height
-                - bottmargin, paint);
+                - bottmargin, chartPaint);
         canvas.drawLine(chart_image_width - RM, topmargin,
                 chart_image_width - RM, chart_image_height
-                        - bottmargin, paint
+                        - bottmargin, chartPaint
         );
 
         // compute number of horizontal grid intervals in terms of Pn
         int Dy = (chart_image_height - topmargin - bottmargin);
         int Dx = (chart_image_width - RM - LM);
         // int ngshor = (int) Math.ceil(Dy / (3 * labeltextht));
-        int ngshor = 4;
-        int ngsver = 8;
-
-        // style for vertical grid lines
-        //paint.setStyle(Paint.Style.FILL);
-        //paint.setColor(Color.GRAY);
+        int ngsver = Dx / (Dy / ngshor);
         // draw vertical grid lines
         double dx = (chart_image_width - RM - LM) / ngsver; // auto
         // scale
@@ -194,7 +225,7 @@ public class StripFooting extends StripfootingbitmapGeometry {
             float y0 = Dy + topmargin;
             float x1 = x0;
             float y1 = y0 - Dy;
-            canvas.drawLine(x0, y0, x1, y1, paint);
+            canvas.drawLine(x0, y0, x1, y1, chartPaint);
 
         }// END OF FOR LOOP
 
@@ -208,72 +239,79 @@ public class StripFooting extends StripfootingbitmapGeometry {
             float y0 = topmargin + i * (float) dy;
             float x1 = x0 + Dx;
             float y1 = y0;
-            canvas.drawLine(x0, y0, x1, y1, paint);
+            canvas.drawLine(x0, y0, x1, y1, chartPaint);
         }// END OF FOR LOOP
 
         // draw hor axis labels from top to bottom
+        labelPaint.setTextAlign(Paint.Align.RIGHT);
+        labelPaint.setColor(Color.BLUE);
 
         String label = null;
-        paint.setTextAlign(Paint.Align.RIGHT);
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(0.f);
+
         float x0 = LM - 5.f; // set label 5px from 0 moment grid line
         dy = (ymax - ymin) / ngshor;
         float y0 = 0.f;
 
         for (int i = 0; i < (ngshor + 1); i++) {
-            label = round2string(ymax - i * dy, 1);
-            y0 = (float) (i * Dy / ngshor + topmargin) + 4.f;
-            canvas.drawText(label, x0, y0, paint);
+            label = r2str(ymax - i * dy, 1);
+            y0 = (float) (i * Dy / ngshor + topmargin) + (float) labeltextht / 2.f;
+            canvas.drawText(label, x0, y0, labelPaint);
         }// END OF FOR LOOP
 
         // draw vertical grid lables
         final Path path = new Path();
         label = null;
-        paint.setTextAlign(Paint.Align.LEFT);
-        y0 = topmargin + Dy + labeltextht / 2; // px distance to bottom line
-        path.lineTo(10.f, 50.f); // direction of writing the text labels
+        labelPaint.setTextAlign(Paint.Align.LEFT);
+        y0 = topmargin + Dy + 5.f; // px distance to bottom line
+        path.lineTo(60.f, 150.f); // direction of writing the text labels
         x0 = (LM - labeltextht / 2);
         path.offset((float) x0, (float) y0);
-        dx = (xmax / ngsver);
+
 
         for (int i = 0; i < (ngsver + 1); i++) {
-            label = round2string(dx * (double) (i), 1);
-            canvas.drawTextOnPath(label, path, 0.f, 0.f, paint);
+            if (this.b1.u() == m) {
+                dx = (xmax / ngsver);
+            } else {
+                dx = this.b1.dblVal(ft) / ngsver;
+            }
+            label = r2str(dx * (double) (i), 2);
+
+            canvas.drawTextOnPath(label, path, 0.f, 0.f, labelPaint);
             path.offset((float) Dx / ngsver, 0.f);
         }// END OF FOR LOOP
 
         // draw vertical axis title
-        y0 = (topmargin + Dy / 2 + getCurTextLengthInPixels(paint, ytitle) / 2);
-        x0 = labeltextht * 1.5f;
+        Paint titlePaint = new Paint(labelPaint);
+        titlePaint.setTextSize(forceTitleHeight);
+        y0 = (topmargin + Dy / 2 + getCurTextLengthInPixels(titlePaint, ytitle) / 2);
+        x0 = 5.f + forceTitleHeight;
 
         path.reset();
         // path.moveTo(0.f, 500.f);
         path.lineTo(0.f, -500.f);
         path.offset((float) x0, (float) y0);
 
-        // vertical title/label size
-        paint.setTextSize(labeltextht + 2);
-
-
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawTextOnPath(ytitle, path, 0.f, 0.f, paint);
+        canvas.drawTextOnPath(ytitle, path, 0.f, 0.f, titlePaint);
 
         // draw horizontal axis title, passed paramaeter
 
-        y0 = (topmargin + Dy + bottmargin - labeltextht);
-        x0 = (LM + Dx / 2 - getCurTextLengthInPixels(paint, xtitle) / 2);
-        canvas.drawText(xtitle, (float) x0, (float) y0, paint);
+        y0 = chart_image_height - edgeclear;
+        x0 = (LM + Dx / 2 - getCurTextLengthInPixels(titlePaint, xtitle) / 2);
+        canvas.drawText(xtitle, (float) x0, (float) y0, titlePaint);
 
         // draw chart title, passed from the calling proc
 
-        y0 = (topmargin / 2 - labeltextht / 4);
-        x0 = (LM + Dx / 2 - getCurTextLengthInPixels(paint, graphtitle) / 2);
-        canvas.drawText(graphtitle, x0, y0, paint);
+        y0 = topmargin - 5;
+        x0 = (LM + Dx / 2 - getCurTextLengthInPixels(titlePaint, graphtitle) / 2);
+        canvas.drawText(graphtitle, x0, y0, titlePaint);
 
         // draw the lines connecting the data points in teh arraylist data
 
-        paint.setColor(Color.RED);
+        Paint graphPaint = new Paint();
+        graphPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        graphPaint.setColor(Color.RED);
+        graphPaint.setAntiAlias(true);
+        graphPaint.setStrokeWidth(2.f);
         float xscale = Dx / (float) (xmax);
         float yscale = Dy / (float) (ymax - ymin);
 
@@ -283,7 +321,7 @@ public class StripFooting extends StripfootingbitmapGeometry {
         // draw y=0 line if true
         if (y_zero_true) {
             canvas.drawLine(LM, d_to_yzero, LM + Dx,
-                    d_to_yzero, paint);
+                    d_to_yzero, graphPaint);
         }
 
         // draw curve lines
@@ -291,7 +329,7 @@ public class StripFooting extends StripfootingbitmapGeometry {
             canvas.drawLine(x.get(i).floatValue() * xscale + LM,
                     d_to_yzero - y.get(i).floatValue() * yscale, x.get(i + 1)
                             .floatValue() * xscale + LM, d_to_yzero
-                            - y.get(i + 1).floatValue() * yscale, paint
+                            - y.get(i + 1).floatValue() * yscale, graphPaint
             );
         }
         return output;
@@ -299,17 +337,9 @@ public class StripFooting extends StripfootingbitmapGeometry {
     }// END OF DRAW CHART
 
 
-    private static String round2string(double val, int decimal_places) {
-        int tmp = (int) Math.floor(val);
-        int mantissa = (int) Math.ceil((val - (double) tmp)
-                * Math.pow(10, decimal_places));
-        return (Integer.toString(tmp) + "." + Integer.toString(mantissa));
-
-    }
-
     /**
      * @param yy = true if required?
-     * @return
+     * @return pressures in kPa
      */
 
     private ArrayList<Double> bearingpressurelist(Boolean yy) {
@@ -334,7 +364,7 @@ public class StripFooting extends StripfootingbitmapGeometry {
                 * (Hb + Df + Hf));
 
         // compute the reasonable interval
-        double interval = 0.1d;
+        double interval = 0.05d;
         int npoints = (int) Math.ceil(b1 / interval);
         interval = b1 / npoints;
 
@@ -347,7 +377,13 @@ public class StripFooting extends StripfootingbitmapGeometry {
         } else {
             ArrayList<Double> y = new ArrayList<Double>();
             for (int i = 0; i < npoints + 1; i++) {
-                y.add(-funcqx(P, M, b1, b2, (double) i * interval));
+                MyDouble qofx = new MyDouble(-funcqx(P, M, b1, b2, (double) i * interval), kPa);
+                if (this.b1.u() != m) { //imperial
+                    y.add(qofx.dblVal(psf));
+                } else {
+                    y.add(qofx.dblUnit(kPa));
+                }
+
             }
             return y;
         }
@@ -373,7 +409,7 @@ public class StripFooting extends StripfootingbitmapGeometry {
                 * (Hb + Df + Hf));
 
         // compute the reasonable interval
-        double interval = 0.1d;
+        double interval = 0.05d;
         int npoints = (int) Math.ceil(b1 / interval);
         int int_points = 10; // integration points factor
         interval = b1 / npoints;
@@ -387,8 +423,9 @@ public class StripFooting extends StripfootingbitmapGeometry {
             return x;
         } else {
             ArrayList<Double> y = new ArrayList<Double>();
-            double netVu = 0.d;
-            y.add(netVu);
+            MyDouble netVu = new MyDouble(0.d, kN);
+            y.add(netVu.v());
+            //y.add(netVu);
             double dx = interval / (int_points);
             for (int i = 1; i < npoints + 1; i++) {
                 // compute shear due to bearing pressure at point i
@@ -406,14 +443,26 @@ public class StripFooting extends StripfootingbitmapGeometry {
                         * (Df * soilwt + Hf * concwt);
                 // compute net shear at section i
                 if ((double) i * interval < d0) {
-                    netVu = Vuiq - Vu_wtfooting;
-                    y.add(netVu);
+                    netVu = new MyDouble(Vuiq - Vu_wtfooting, kN);
+                    if (this.b1.u() != m) {
+                        y.add(netVu.dblVal(kip));
+                    } else {
+                        y.add(netVu.dblVal(kN));
+                    }
                 } else if ((double) i * interval < d0 + dp) {
-                    netVu = Vuiq - Vu_wtfooting - P0v;
-                    y.add(netVu);
+                    netVu = new MyDouble(Vuiq - Vu_wtfooting - P0v, kN);
+                    if (this.b1.u() != m) {
+                        y.add(netVu.dblVal(kip));
+                    } else {
+                        y.add(netVu.dblVal(kN));
+                    }
                 } else {
-                    netVu = Vuiq - Vu_wtfooting - P0v - P1v;
-                    y.add(netVu);
+                    netVu = new MyDouble(Vuiq - Vu_wtfooting - P0v - P1v, kN);
+                    if (this.b1.u() != m) {
+                        y.add(netVu.dblVal(kip));
+                    } else {
+                        y.add(netVu.dblVal(kN));
+                    }
                 }
             }
             return y;
@@ -441,7 +490,7 @@ public class StripFooting extends StripfootingbitmapGeometry {
                 * hx);
 
         // compute the reasonable interval
-        double interval = 0.1d;
+        double interval = 0.05d;
         int npoints = (int) Math.ceil(b1 / interval);
         int int_points = 10; // integration points factor
         interval = b1 / npoints;
@@ -455,8 +504,8 @@ public class StripFooting extends StripfootingbitmapGeometry {
             return x;
         } else {
             ArrayList<Double> y = new ArrayList<Double>();
-            double netMu = 0.d;
-            y.add(netMu);
+            MyDouble netMu = new MyDouble(0.d, kN);
+            y.add(netMu.v());
             double dx = interval / (int_points);
             for (int i = 1; i < npoints + 1; i++) {
                 // compute total moment due to bearing pressure at point i
@@ -476,15 +525,27 @@ public class StripFooting extends StripfootingbitmapGeometry {
                         * (Df * soilwt + Hf * concwt);
                 // compute net shear at section i
                 if (xi < d0) {
-                    netMu = Muiq - Mu_wtfooting;
-                    y.add(-netMu);
+                    netMu = new MyDouble(-(Muiq - Mu_wtfooting), kNm);
+                    if (this.b1.u() != m) {
+                        y.add(netMu.dblVal(kNm));
+                    } else {
+                        y.add(netMu.dblVal(kipft));
+                    }
                 } else if (xi < d0 + dp) {
-                    netMu = Muiq - Mu_wtfooting - P0v * (xi - d0) + P0h * hx;
-                    y.add(-netMu);
+                    netMu = new MyDouble(-(Muiq - Mu_wtfooting - P0v * (xi - d0) + P0h * hx), kNm);
+                    if (this.b1.u() != m) {
+                        y.add(netMu.dblVal(kNm));
+                    } else {
+                        y.add(netMu.dblVal(kipft));
+                    }
                 } else {
-                    netMu = Muiq - Mu_wtfooting - P0v * (xi - d0) + P0h * hx
-                            - P1v * (xi - d0 - dp) + P1h * hx;
-                    y.add(-netMu);
+                    netMu = new MyDouble(-(Muiq - Mu_wtfooting - P0v * (xi - d0) + P0h * hx
+                            - P1v * (xi - d0 - dp) + P1h * hx), kNm);
+                    if (this.b1.u() != m) {
+                        y.add(netMu.dblVal(kNm));
+                    } else {
+                        y.add(netMu.dblVal(kipft));
+                    }
                 }
             }
             return y;
@@ -495,55 +556,34 @@ public class StripFooting extends StripfootingbitmapGeometry {
 
     public Bitmap getBearingPressureBitmap() {
 
-        // draw bearing pressure
-        int bearing_chart_width = geombitmapWidth;
-        int bearing_chart_height = (int) Math.rint(bearing_chart_width * 0.5d);
 
         ArrayList<Double> x = bearingpressurelist(false);
         ArrayList<Double> y = bearingpressurelist(true);
-        Bitmap bearingbmp = drawChart(bearing_chart_width,
-                bearing_chart_height, "Bearing (kPa)", "Footing length(m)",
+        Bitmap bearingbmp = drawChart(bearing_chart_width, bearing_chart_width * 2 / 3,
+                "Bearing" + strpUnit, " ",
                 "BEARING PRESSURE", false, x, y);
         return (bearingbmp);
     }
 
-/*
-
-    public void showchart() {
-
-        // draw bearing pressure
-        Display display = getWindowManager().getDefaultDisplay();
-        bearing_chart_width = Math.min(display.getWidth(), 420);
-        bearing_chart_height = (int) Math
-                .rint(bearing_chart_width * 2.d / 3.d);
+    public Bitmap getShearDiagBitmap() {
 
         ArrayList<Double> x = bearingpressurelist(false);
-        ArrayList<Double> y = bearingpressurelist(true);
-        ImageView im_bearing = (ImageView) findViewById(R.id.imageview_bearing);
-        Bitmap bearingbmp = drawChart(bearing_chart_width,
-                bearing_chart_height, "Bearing (kPa)", "Footing length(m)",
-                "BEARING PRESSURE", false, x, y);
-        im_bearing.setImageBitmap(bearingbmp);
-
-        // draw shear diagram
-        // x.clear();
-        y.clear();
-        // x = shearlist(false);
-        y = shearlist(true);
-        ImageView im_shear = (ImageView) findViewById(R.id.imageview_shear);
-        Bitmap shearbmp = drawChart(bearing_chart_width, bearing_chart_height,
-                "shear(kN)", "Footing length(m)", "SHEAR DIAGRAM", true, x, y);
-        im_shear.setImageBitmap(shearbmp);
-
-        // draw moment diagram
-        y.clear();
-        y = momentlist(true);
-        ImageView im_moment = (ImageView) findViewById(R.id.imageview_moment);
-        Bitmap momentbmp = drawChart(bearing_chart_width, bearing_chart_height,
-                "Moment(kNm)", "Footing length(m)", "MOMENT DIAGRAM", true, x, y);
-        im_moment.setImageBitmap(momentbmp);
+        ArrayList<Double> y = shearlist(true);
+        Bitmap shearbmp = drawChart(bearing_chart_width, bearing_chart_width * 2 / 3,
+                "shear" + strfUnit, " ", "SHEAR DIAGRAM", true, x, y);
+        return (shearbmp);
     }
-*/
+
+
+    public Bitmap getMomentDiagBitmap() {
+
+        ArrayList<Double> x = bearingpressurelist(false);
+        ArrayList<Double> y = momentlist(true);
+        Bitmap momentbmp = drawChart(bearing_chart_width, bearing_chart_width * 2 / 3,
+                "Moment" + strmUnit, "Footing length" + strlUnit, "MOMENT DIAGRAM", true, x, y);
+        return (momentbmp);
+    }
+
 
     public static double getmax(ArrayList<Double> alist, Boolean ismax) {
         ArrayList<Double> tmp = new ArrayList<Double>(alist);
@@ -555,22 +595,31 @@ public class StripFooting extends StripfootingbitmapGeometry {
         }
     }
 
-    public int getMaxStrOfGridLabels() {
+    public float getMaxWidthGridLabel(Paint paint) {
         //global bearing, shear, moment magnitudes
 
-        ArrayList<Double> tmp = new ArrayList<Double>();
 
-        tmp.add(getmax(bearingpressurelist(true), true));
-        tmp.add(getmax(bearingpressurelist(true), false));
-        tmp.add(getmax(shearlist(true), true));
-        tmp.add(getmax(shearlist(true), false));
-        tmp.add(getmax(momentlist(true), true));
-        tmp.add(getmax(momentlist(true), false));
+        int width = 0;
+        ArrayList<Double> arrayList = bearingpressurelist(true);
+        double ymax = getmax(arrayList, true);
+        double ymin = getmax(arrayList, false);
+        width = max(width, getCurTextLengthInPixels(paint, r2str(ymax, 2)));
+        width = max(width, getCurTextLengthInPixels(paint, r2str(ymin, 2)));
 
-        String smax = round2string(getmax(tmp, true), 2);
-        String smin = round2string(getmax(tmp, false), 2);
+        arrayList = shearlist(true);
+        ymax = getmax(arrayList, true);
+        ymin = getmax(arrayList, false);
+        width = max(width, getCurTextLengthInPixels(paint, r2str(ymax, 2)));
+        width = max(width, getCurTextLengthInPixels(paint, r2str(ymin, 2)));
 
-        return max(getCurTextLengthInPixels(paint, smin), getCurTextLengthInPixels(paint, smax));
+        arrayList = momentlist(true);
+        ymax = getmax(arrayList, true);
+        ymin = getmax(arrayList, false);
+        width = max(width, getCurTextLengthInPixels(paint, r2str(ymax, 2)));
+        width = max(width, getCurTextLengthInPixels(paint, r2str(ymin, 2)));
+
+
+        return width;
 
     }
 
@@ -580,14 +629,14 @@ public class StripFooting extends StripfootingbitmapGeometry {
 
         canvas = new Canvas(mbitmap_final);
 
-        mpaint = new Paint();
-        mpaint.setAntiAlias(true);
+        labelPaint = new Paint();
+        labelPaint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         //draw footing elevation
-        mpaint.setColor(Color.BLUE);
-        mpaint.setStyle(Paint.Style.STROKE);
-        mpaint.setStrokeWidth(0.f);
-        drawSFelev(mpaint, LM, RM);
+        labelPaint.setColor(Color.BLUE);
+        labelPaint.setStyle(Paint.Style.STROKE);
+        labelPaint.setStrokeWidth(0.f);
+        drawSFelev(labelPaint, LM, RM);
 
 
         return mbitmap_final;

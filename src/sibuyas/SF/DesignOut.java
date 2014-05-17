@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,22 @@ public class DesignOut extends Fragment {
     MyDouble b1, b2, c1, c2, Hb, Df, Hf, d0, dp, P0v, P0h, P1v, P1h, Wsoil;
     StripFooting sf;
 
+
+    DisplayMetrics metrics;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (null != savedInstanceState) {
+            //Log.i(TAG, "premium fragment oncreate bundle not null");
+            return;
+        }
+        setHasOptionsMenu(true);
+        //Log.i(TAG, "onCreate");
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,7 +53,9 @@ public class DesignOut extends Fragment {
 
         if (getDesignInput()) {
 
-            int mbitmapWidth = getResources().getDisplayMetrics().widthPixels;
+            //get  sharedpref
+            sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            int mbitmapWidth = Integer.parseInt(sp.getString(getString(R.string.WIDTHPIXEL_PREF), ""));
             //scale the height to matchwith actual data
             int mbitmapHeight = (int) ((double) mbitmapWidth * ((Hb.v() + Df.v() + Hf.v()) * 1.0d / b1.v()));
             Bitmap bitmap = Bitmap.createBitmap(mbitmapWidth, mbitmapHeight, Bitmap.Config.ARGB_8888);
@@ -47,9 +66,14 @@ public class DesignOut extends Fragment {
         ImageView geomview = (ImageView) view.findViewById(R.id.geom_img);
         geomview.setImageBitmap(sf.getGeomSketch());
 
-        ImageView bearing_img = (ImageView) view.findViewById(R.id.imageview_shear);
+        ImageView bearing_img = (ImageView) view.findViewById(R.id.bearing_img_id);
         bearing_img.setImageBitmap(sf.getBearingPressureBitmap());
 
+        ImageView shear_img = (ImageView) view.findViewById(R.id.shear_img_id);
+        shear_img.setImageBitmap(sf.getShearDiagBitmap());
+
+        ImageView moment_img = (ImageView) view.findViewById(R.id.moment_img_id);
+        moment_img.setImageBitmap(sf.getMomentDiagBitmap());
 
         return view;
 
